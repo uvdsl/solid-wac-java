@@ -1,11 +1,14 @@
 # SOLID Web Access Control
 
-This library implements handling Web Access Control rules in plain Java, (... _sips coffee_ ...).
+This library implements checking Web Access Control rules in plain Java, (... _sips coffee_ ...), and a little bit more:
 
-The [WebAccessControlBouncer](src/main/java/edu/kit/aifb/solid/wac/WebAccessControlBouncer.java) implements basic functionality which you may want to extend/override. 
-In particular, the [WebAccessControlBouncer](src/main/java/edu/kit/aifb/solid/wac/WebAccessControlBouncer.java) determines the mapping between the resource and the corresponding `.acl` resource it will check for rules.
+That is, we assume that somewhere there is a simple Web storage without any access control.
+The [WebAccessControlBouncer](src/main/java/edu/kit/aifb/solid/wac/WebAccessControlBouncer.java) implements basic WAC functionality which you may want to extend/override.
+In particular, the it __defines the mapping__ between the resource and the corresponding `.acl` resource it will check for rules.
+This `.acl` resource may then be presented in a `Link` header from a Solid Pod.
+
 Here, we chose the simple and standard way of simply appending `.acl` to the resource's URI (if not already ending on `.acl`.)
-You can extend the [WebAccessControlBouncer](src/main/java/edu/kit/aifb/solid/wac/WebAccessControlBouncer.java) to define your own mapping.
+You can extend the [WebAccessControlBouncer](src/main/java/edu/kit/aifb/solid/wac/WebAccessControlBouncer.java) and override the corresponding methods to define your own mapping.
 
 When checking Access Control Rules, the [WebAccessControlBouncer](src/main/java/edu/kit/aifb/solid/wac/WebAccessControlBouncer.java) will always return `true` if any matching rule was found, or throw a [SolidWacExcpetion](src/main/java/edu/kit/aifb/solid/wac/exception/SolidWacException.java) with a status code (401 for unauthenticated, 403 for unauthorized or 500 for another error, most likely because a Web resource could not be retrieved).
 
