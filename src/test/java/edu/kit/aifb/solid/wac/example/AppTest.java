@@ -39,6 +39,7 @@ public class AppTest {
     private static String authenticatedWriteAcl;
     private static String publicReadAcl;
     private static String noAclFound;
+    private static String containerWithAcl;
 
     private static String patchInsertDelete;
     private static String patchInsert;
@@ -120,6 +121,18 @@ public class AppTest {
                         acl:mode acl:Read.
                 """, publicReadAcl.split(".acl")[0]);
         addAsNamedGraph(dataset, publicReadAcl, publicReadAclTTL);
+
+        containerWithAcl = address + "testInheritedRule/.acl";
+        String containerWithAclTTL = String.format(
+                """
+                    @prefix acl: <http://www.w3.org/ns/auth/acl#> .
+                    @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+                    <#auth> a acl:Authorization;
+                        acl:agentClass foaf:Agent;
+                        acl:default <%s>;
+                        acl:mode acl:Read.
+                """, containerWithAcl.split(".acl")[0]);
+        addAsNamedGraph(dataset, containerWithAcl, containerWithAclTTL);
 
         noAclFound = address + "someContainer/someFile";
 
@@ -581,5 +594,16 @@ public class AppTest {
         assertTrue("Expected: rule=null; Result: rule=" + rule, ok);
     }
 
-    // TODO inherited rules
+    /*
+         * INHERITED ACL FOUND
+     */
+    @Test
+    public void testAccessControlUNAUTHENTICATEDInheritedPublicRead() {
+        String resource = containerWithAcl.split(".acl")[0] + "someContainer/someFile";
+        String method = GET;
+        String body = "";
+        String rule = App.checkAccessControl(resource, method, body, null, envResourceMap, envResourceAclMap);
+        boolean ok = (rule != null) & rule.equals(containerWithAcl + "#auth");
+        assertTrue("Expected: rule=<" + containerWithAcl + "#auth>; Result: rule=" + rule, ok);
+    }
 }

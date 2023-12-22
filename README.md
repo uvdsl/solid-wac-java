@@ -13,6 +13,9 @@ Allowing multiple rules with different targets, i.e. allowing one `.acl` to be a
 
 You _can_ do this. But I chose not to.
 
+For `.acl` checking using the (resource - RDF dataset) map, we check if the `.acl` is a named graph in the dataset.
+That is, the dataset that is the value of the key `.acl` URI string.
+
 ## [Example](src/main/java/edu/kit/aifb/solid/wac/example/) usage:
 
 ```java
