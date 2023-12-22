@@ -187,7 +187,7 @@ public class AppTest {
         String method = GET;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, null, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(publicReadAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(publicReadAcl + "#auth");
         assertTrue("Expected: rule=<" + publicReadAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -260,7 +260,7 @@ public class AppTest {
         String method = PATCH;
         String body = patchInsertDelete;
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(authenticatedWriteAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(authenticatedWriteAcl + "#auth");
         assertTrue("Expected: rule=<" + authenticatedWriteAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -270,7 +270,7 @@ public class AppTest {
         String method = PATCH;
         String body = patchInsert;
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(authenticatedWriteAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(authenticatedWriteAcl + "#auth");
         assertTrue("Expected: rule=<" + authenticatedWriteAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -280,7 +280,7 @@ public class AppTest {
         String method = POST;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(authenticatedWriteAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(authenticatedWriteAcl + "#auth");
         assertTrue("Expected: rule=<" + authenticatedWriteAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -290,7 +290,7 @@ public class AppTest {
         String method = PUT;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(authenticatedWriteAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(authenticatedWriteAcl + "#auth");
         assertTrue("Expected: rule=<" + authenticatedWriteAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -300,7 +300,7 @@ public class AppTest {
         String method = DELETE;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(authenticatedWriteAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(authenticatedWriteAcl + "#auth");
         assertTrue("Expected: rule=<" + authenticatedWriteAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -343,7 +343,7 @@ public class AppTest {
         String method = PATCH;
         String body = patchInsert;
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(groupAppendAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(groupAppendAcl + "#auth");
         assertTrue("Expected: rule=<" + groupAppendAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -353,7 +353,7 @@ public class AppTest {
         String method = POST;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(groupAppendAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(groupAppendAcl + "#auth");
         assertTrue("Expected: rule=<" + groupAppendAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -396,7 +396,7 @@ public class AppTest {
         String method = GET;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(agentControlAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(agentControlAcl + "#auth");
         assertTrue("Expected: rule=<" + agentControlAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -406,7 +406,7 @@ public class AppTest {
         String method = PATCH;
         String body = patchInsertDelete;
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(agentControlAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(agentControlAcl + "#auth");
         assertTrue("Expected: rule=<" + agentControlAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -416,7 +416,7 @@ public class AppTest {
         String method = PATCH;
         String body = patchInsert;
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(agentControlAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(agentControlAcl + "#auth");
         assertTrue("Expected: rule=<" + agentControlAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -426,7 +426,7 @@ public class AppTest {
         String method = POST;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(agentControlAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(agentControlAcl + "#auth");
         assertTrue("Expected: rule=<" + agentControlAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -436,7 +436,7 @@ public class AppTest {
         String method = PUT;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(agentControlAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(agentControlAcl + "#auth");
         assertTrue("Expected: rule=<" + agentControlAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -446,7 +446,7 @@ public class AppTest {
         String method = DELETE;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, webid, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(agentControlAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(agentControlAcl + "#auth");
         assertTrue("Expected: rule=<" + agentControlAcl + "#auth>; Result: rule=" + rule, ok);
     }
 
@@ -603,7 +603,7 @@ public class AppTest {
         String method = GET;
         String body = "";
         String rule = App.checkAccessControl(resource, method, body, null, envResourceMap, envResourceAclMap);
-        boolean ok = (rule != null) & rule.equals(containerWithAcl + "#auth");
+        boolean ok = (rule != null) && rule.equals(containerWithAcl + "#auth");
         assertTrue("Expected: rule=<" + containerWithAcl + "#auth>; Result: rule=" + rule, ok);
     }
 }
