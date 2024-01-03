@@ -167,6 +167,7 @@ public class WacQueryBuilder {
         }
         switch (this.method) {
             case "GET":
+            case "HEAD":
                 return Namespaces.ACL + "Read";
             case "POST":
             case "PATCH":
