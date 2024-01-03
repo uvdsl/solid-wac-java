@@ -64,7 +64,7 @@ public class App {
     public static void main(String[] args) {
         // mock application environment
         WacMapping envResourceAclMap = new ResourceAclMap(); // ! IMPLEMENTATION DEPENDENT 
-        Map<String, Dataset> envResourceMap = new HashMap(); // ! IMPLEMENTATION DEPENDENT 
+        Map<String, Dataset> envResourceMap = new HashMap<>(); // ! IMPLEMENTATION DEPENDENT 
         String resource = "http://localhost:8080/marmotta/ldp/test";
         String acl = envResourceAclMap.getAcl(resource);
         System.out.println("ACL: " + acl);
