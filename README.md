@@ -53,6 +53,10 @@ That is, the dataset that is the value of the key `.acl` URI string.
         return null;
     }
 ```
+By the way, WAC does not really define behaviour for the HTTP method OPTIONS. 
+OPTIONS is common for CORS pre-flight requests.
+Be sure to hanlde OPTIONS manually. 
+Otherwise you may keep wondering why your code does not work.
 
 Want to run an example directly? Naybe something like:
 ```java
