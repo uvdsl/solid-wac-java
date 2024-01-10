@@ -115,7 +115,7 @@ public class WacQueryBuilder {
      */
     private boolean checkForNonDeletingRequest() {
         switch (this.method) {
-            case "GET", "POST" -> {
+            case "GET", "HEAD", "POST" -> {
                 // if on resource then not allowed anyway - on ldp:Container it is append.
                 return true;
             }
