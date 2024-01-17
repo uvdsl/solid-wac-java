@@ -48,7 +48,7 @@ public class AppTest {
     private static Map<String, Dataset> envResourceMap;
 
     private static void addAsNamedGraph(Dataset dataset, String name, String ttl) {
-        Model model = dataset.getNamedModel(name);
+        Model model = dataset.getDefaultModel();
         InputStream stream = new ByteArrayInputStream(ttl.getBytes(StandardCharsets.UTF_8));
         RDFDataMgr.read(model, stream, name, Lang.TTL);
     }
@@ -60,6 +60,21 @@ public class AppTest {
     public static void setUp() {
         // Create an RDF dataset by parsing the Turtle data
         dataset = DatasetFactory.create();
+        envResourceMap = new HashMap<>();
+        envResourceAclMap = new WacMapping() {
+            static final String ACL_SUFFIX = ".acl";
+
+            @Override
+            public String getAcl(String resource) {
+                String res = resource.split("#")[0];
+                return (res.endsWith(ACL_SUFFIX)) ? res : res + ACL_SUFFIX;
+            }
+
+            @Override
+            public String getResource(String acl) {
+                return acl.split(ACL_SUFFIX)[0];
+            }
+        };
 
         address = "http://example.org/test/";
 
@@ -72,6 +87,7 @@ public class AppTest {
                     <group#1> vcard:hasMember <%s> .
                 """, webid);
         addAsNamedGraph(dataset, group, groupTTL);
+        envResourceMap.put(group, dataset);
 
         groupAppendAcl = address + "testAgentGroupAccessControl.acl";
         String groupAppendAclTTL = String.format(
@@ -87,6 +103,7 @@ public class AppTest {
                         acl:mode acl:Append.
                 """, groupAppendAcl.split(".acl")[0], groupAppendAcl.split(".acl")[0]);
         addAsNamedGraph(dataset, groupAppendAcl, groupAppendAclTTL);
+        envResourceMap.put(groupAppendAcl, dataset);
 
         agentControlAcl = address + "testAgentAccessAppend.acl";
         String agentControlAclTTL = String.format(
@@ -98,6 +115,7 @@ public class AppTest {
                         acl:mode acl:Control.
                 """, agentControlAcl.split(".acl")[0]);
         addAsNamedGraph(dataset, agentControlAcl, agentControlAclTTL);
+        envResourceMap.put(agentControlAcl, dataset);
 
         authenticatedWriteAcl = address + "testAuthenticatedAccessWrite.acl";
         String authenticatedWriteAclTTL = String.format(
@@ -109,6 +127,7 @@ public class AppTest {
                         acl:mode acl:Write.
                 """, authenticatedWriteAcl.split(".acl")[0]);
         addAsNamedGraph(dataset, authenticatedWriteAcl, authenticatedWriteAclTTL);
+        envResourceMap.put(authenticatedWriteAcl, dataset);
 
         publicReadAcl = address + "testPublicAccessRead.acl";
         String publicReadAclTTL = String.format(
@@ -121,6 +140,7 @@ public class AppTest {
                         acl:mode acl:Read.
                 """, publicReadAcl.split(".acl")[0]);
         addAsNamedGraph(dataset, publicReadAcl, publicReadAclTTL);
+        envResourceMap.put(publicReadAcl, dataset);
 
         containerWithAcl = address + "testInheritedRule/.acl";
         String containerWithAclTTL = String.format(
@@ -133,6 +153,7 @@ public class AppTest {
                         acl:mode acl:Read.
                 """, containerWithAcl.split(".acl")[0]);
         addAsNamedGraph(dataset, containerWithAcl, containerWithAclTTL);
+        envResourceMap.put(containerWithAcl, dataset);
 
         noAclFound = address + "someContainer/someFile";
 
@@ -152,30 +173,6 @@ public class AppTest {
                               solid:where   { ?person ex:familyName \"Garcia\". };
                               solid:inserts { ?person ex:givenName \"Alex\". }.
                         """;
-
-        envResourceAclMap = new WacMapping() {
-            static final String ACL_SUFFIX = ".acl";
-
-            @Override
-            public String getAcl(String resource) {
-                String res = resource.split("#")[0];
-                return (res.endsWith(ACL_SUFFIX)) ? res : res + ACL_SUFFIX;
-            }
-
-            @Override
-            public String getResource(String acl) {
-                return acl.split(ACL_SUFFIX)[0];
-            }
-        };
-        envResourceMap = new HashMap<String, Dataset>() {
-            @Override
-            public Dataset get(Object key) {
-                if (!(key instanceof String)) {
-                    return null;
-                }
-                return dataset;
-            }
-        };
     }
 
     /*

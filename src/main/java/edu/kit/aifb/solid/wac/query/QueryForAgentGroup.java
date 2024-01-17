@@ -68,10 +68,8 @@ class QueryForAgentGroup extends WacQuery {
     protected String getQueryWithCurrentBGPs() {
         return String.format("""
                                 PREFIX acl: <%s>
-                                SELECT %s %s {
-                                GRAPH ?graph {
+                                SELECT %s %s WHERE {
                                     %s
-                                }
                                 }
                             """, Namespaces.ACL, this.VARIABLE_FOR_AUTHORIZATION, this.VARIABLE_FOR_GROUP, this.getQueryBGPs());
     }
@@ -79,18 +77,15 @@ class QueryForAgentGroup extends WacQuery {
     /**
      * Dynamically generate a new query to look up the agent group.
      *
-     * @param groupGraphName
      * @return true or false
      */
-    private String generateAgentQueryString(String groupGraphName, String groupName) {
+    private String generateAgentQueryString(String groupName) {
         return String.format("""
                 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
-                ASK {
-                GRAPH <%s> {
-                <%s> vcard:hasMember <%s>.
+                ASK WHERE {
+                <%s> vcard:hasMember <%s>
                 }
-                }
-                """, groupGraphName, groupName, this.forAgentWebId);
+                """, groupName, this.forAgentWebId);
     }
 
     /**
@@ -112,7 +107,7 @@ class QueryForAgentGroup extends WacQuery {
             QuerySolution soln = results.next();
             String groupName = soln.getResource(this.VARIABLE_FOR_GROUP).getURI();
             Dataset datasetGroup = this.agentGroupsMap.get(groupName.split("#")[0]);
-            String queryStringForAgent = generateAgentQueryString(groupName.split("#")[0], groupName);
+            String queryStringForAgent = generateAgentQueryString(groupName);
             QueryExecution qexecAgent = QueryExecutionFactory.create(queryStringForAgent, datasetGroup);
             boolean resultAgent = qexecAgent.execAsk();
             if (resultAgent) {
