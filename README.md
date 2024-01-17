@@ -81,12 +81,12 @@ Want to run an example directly? Naybe something like:
         """;
         // Create an RDF dataset by parsing the Turtle data
         Dataset dataset = DatasetFactory.create();
-        Model aclRDF = dataset.getNamedModel(acl);
+        Model aclRDF = dataset.getDefaultModel();
         InputStream stream = new ByteArrayInputStream(someAcl.getBytes(StandardCharsets.UTF_8));
         RDFDataMgr.read(aclRDF, stream, acl, Lang.TTL);
         // Access the dataset
         System.out.println("RDF Dataset:");
-        dataset.getNamedModel(acl).write(System.out, "TTL");  // Example: Turtle format
+        dataset.getDefaultModel().write(System.out, "TTL");  // Example: Turtle format
         envResourceMap.put(acl, dataset);
         // mock a HTTP request
         String webid = "http://example.org/webid";
