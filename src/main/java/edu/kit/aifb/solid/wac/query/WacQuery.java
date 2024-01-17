@@ -76,10 +76,8 @@ public abstract class WacQuery {
     protected String getQueryWithCurrentBGPs() {
         return String.format("""
                                 PREFIX acl: <%s>
-                                SELECT %s {
-                                GRAPH ?graph {
+                                SELECT %s WHERE {
                                     %s
-                                }
                                 }
                             """, Namespaces.ACL, this.VARIABLE_FOR_AUTHORIZATION, this.queryBGPs);
     }

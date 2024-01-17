@@ -193,7 +193,7 @@ public class WacQueryBuilder {
         String currentAclUriString = this.resourceAclMap.getAcl(res);
         Dataset currentAcl = this.resourceMap.get(currentAclUriString);
         // found .acl ?
-        if (currentAcl != null && currentAcl.containsNamedModel(currentAclUriString)) {
+        if (currentAcl != null) {
             this.authoritativeACL = currentAcl;
             return;
         }
